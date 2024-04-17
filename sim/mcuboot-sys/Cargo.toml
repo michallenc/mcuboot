@@ -38,6 +38,9 @@ overwrite-only = []
 
 swap-move = []
 
+# Copy with revert algorithm
+copy-with-revert = []
+
 # Disable validation of the primary slot
 validate-primary-slot = []
 

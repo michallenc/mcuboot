@@ -552,6 +552,25 @@ impl ImagesBuilder {
                 flash.insert(dev_id, dev);
                 (flash, areadesc, &[])
             }
+
+            DeviceName::SAMv71SpiFlash => {
+                // Simulate SAMv71 with external SPI flash.
+                let dev0 = SimFlash::new(vec![512; 4096], align as usize, erased_val);
+                let dev1 = SimFlash::new(vec![4096; 32768], align as usize, erased_val);
+
+                let mut areadesc = AreaDesc::new();
+                areadesc.add_flash_sectors(0, &dev0);
+                areadesc.add_flash_sectors(1, &dev1);
+
+                areadesc.add_image(0x20000, 0x1e0000, FlashId::Image0, 0);
+                areadesc.add_image(0x000000, 0x1e0000, FlashId::Image1, 1);
+                areadesc.add_image(0x1e0000, 0x20000, FlashId::ImageScratch, 1);
+
+                let mut flash = SimMultiFlash::new();
+                flash.insert(0, dev0);
+                flash.insert(1, dev1);
+                (flash, areadesc, &[Caps::SwapUsingScratch])
+            }
         }
     }
 
