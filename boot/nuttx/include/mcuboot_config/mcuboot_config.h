@@ -26,7 +26,7 @@
 
 #include <nuttx/config.h>
 
-#ifdef CONFIG_MCUBOOT_WATCHDOG
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG
 #  include "watchdog/watchdog.h"
 #endif
 
@@ -60,13 +60,13 @@
 
 /* Use image swap without using scratch area.*/
 
-#ifdef CONFIG_MCUBOOT_SWAP_USING_MOVE
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_SWAP_USING_MOVE) || defined(CONFIG_MCUBOOT_SWAP_USING_MOVE)
 #  define MCUBOOT_SWAP_USING_MOVE 1
 #endif
 
 /* Enable the overwrite-only code path. */
 
-#ifdef CONFIG_MCUBOOT_OVERWRITE_ONLY
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_OVERWRITE_ONLY) || defined(CONFIG_MCUBOOT_OVERWRITE_ONLY)
 #  define MCUBOOT_OVERWRITE_ONLY
 #endif
 
@@ -74,7 +74,7 @@
  * to install the new image, rather than the entire image slot.
  */
 
-#ifdef CONFIG_MCUBOOT_OVERWRITE_ONLY_FAST
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_OVERWRITE_ONLY_FAST) || defined(CONFIG_MCUBOOT_OVERWRITE_ONLY_FAST)
 #  define MCUBOOT_OVERWRITE_ONLY_FAST
 #endif
 
@@ -84,31 +84,31 @@
  * the ability to revert.
  */
 
-#ifdef CONFIG_MCUBOOT_COPY_WITH_REVERT
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_COPY_WITH_REVERT) || defined(CONFIG_MCUBOOT_COPY_WITH_REVERT)
 #  define MCUBOOT_COPY_WITH_REVERT
 #endif
 
 /* Enable the direct-xip code path. */
 
-#ifdef CONFIG_MCUBOOT_DIRECT_XIP
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_DIRECT_XIP) || defined(CONFIG_MCUBOOT_DIRECT_XIP)
 #  define MCUBOOT_DIRECT_XIP
 #endif
 
 /* Enable the revert mechanism in direct-xip mode. */
 
-#ifdef CONFIG_MCUBOOT_DIRECT_XIP_REVERT
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_DIRECT_XIP_REVERT) || defined(CONFIG_MCUBOOT_DIRECT_XIP_REVERT)
 #  define MCUBOOT_DIRECT_XIP_REVERT
 #endif
 
 /* Enable the ram-load code path. */
 
-#ifdef CONFIG_MCUBOOT_RAM_LOAD
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_RAM_LOAD) || defined(CONFIG_MCUBOOT_RAM_LOAD)
 #  define MCUBOOT_RAM_LOAD
 #endif
 
 /* Enable bootstrapping the erased primary slot from the secondary slot */
 
-#ifdef CONFIG_MCUBOOT_BOOTSTRAP
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_BOOTSTRAP) || defined(CONFIG_MCUBOOT_BOOTSTRAP)
 #  define MCUBOOT_BOOTSTRAP
 #endif
 
@@ -119,11 +119,11 @@
  * available.
  */
 
-#ifdef CONFIG_MCUBOOT_USE_MBED_TLS
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_USE_MBED_TLS) || defined(CONFIG_MCUBOOT_USE_MBED_TLS)
 #  define MCUBOOT_USE_MBED_TLS
 #endif
 
-#ifdef CONFIG_MCUBOOT_USE_TINYCRYPT
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_USE_TINYCRYPT) || defined(CONFIG_MCUBOOT_USE_TINYCRYPT)
 #  define MCUBOOT_USE_TINYCRYPT
 #endif
 
@@ -175,7 +175,7 @@
  *    MCUBOOT_LOG_ERR > MCUBOOT_LOG_WRN > MCUBOOT_LOG_INF > MCUBOOT_LOG_DBG
  */
 
-#ifdef CONFIG_MCUBOOT_ENABLE_LOGGING
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_ENABLE_LOGGING) || defined(CONFIG_MCUBOOT_ENABLE_LOGGING)
 #  define MCUBOOT_HAVE_LOGGING
 #endif
 
@@ -196,14 +196,26 @@
  * enable the watchdog (if required)!
  */
 
-#ifdef CONFIG_MCUBOOT_WATCHDOG
+#if defined(CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG) || defined(CONFIG_MCUBOOT_WATCHDOG)
 
-#ifndef CONFIG_MCUBOOT_WATCHDOG_DEVPATH
-#  define CONFIG_MCUBOOT_WATCHDOG_DEVPATH "/dev/watchdog0"
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_DEVPATH
+#  define MCUBOOT_WATCHDOG_DEVPATH CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_DEVPATH
+#else
+#  define MCUBOOT_WATCHDOG_DEVPATH CONFIG_MCUBOOT_WATCHDOG_DEVPATH
 #endif
 
-#ifndef CONFIG_MCUBOOT_WATCHDOG_TIMEOUT
-#  define CONFIG_MCUBOOT_WATCHDOG_TIMEOUT 10000      /* Watchdog timeout in ms */
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_TIMEOUT
+#  define MCUBOOT_WATCHDOG_TIMEOUT CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_TIMEOUT
+#else
+#  define MCUBOOT_WATCHDOG_TIMEOUT CONFIG_MCUBOOT_WATCHDOG_TIMEOUT
+#endif
+
+#if !defined(CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_DEVPATH) && !defined(CONFIG_MCUBOOT_WATCHDOG_DEVPATH)
+#  define MCUBOOT_WATCHDOG_DEVPATH "/dev/watchdog0"
+#endif
+
+#if !defined(CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_TIMEOUT) && !defined(CONFIG_MCUBOOT_WATCHDOG_TIMEOUT)
+#  define MCUBOOT_WATCHDOG_TIMEOUT 10000      /* Watchdog timeout in ms */
 #endif
 
 #  define MCUBOOT_WATCHDOG_FEED()       do                           \

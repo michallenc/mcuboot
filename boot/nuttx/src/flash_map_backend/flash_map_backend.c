@@ -73,13 +73,43 @@ struct flash_device_s
  * Private Data
  ****************************************************************************/
 
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_PRIMARY_SLOT_PATH
+# define MCUBOOT_PRIMARY_SLOT_PATH CONFIG_PROJECT_LIBS_MCUBOOT_PRIMARY_SLOT_PATH
+#else
+# define MCUBOOT_PRIMARY_SLOT_PATH CONFIG_MCUBOOT_PRIMARY_SLOT_PATH
+#endif
+
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_SECONDARY_SLOT_PATH
+# define MCUBOOT_SECONDARY_SLOT_PATH CONFIG_PROJECT_LIBS_MCUBOOT_SECONDARY_SLOT_PATH
+#else
+# define MCUBOOT_SECONDARY_SLOT_PATH CONFIG_MCUBOOT_SECONDARY_SLOT_PATH
+#endif
+
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_TERTIARY_SLOT_PATH
+# define MCUBOOT_TERTIARY_SLOT_PATH CONFIG_PROJECT_LIBS_MCUBOOT_TERTIARY_SLOT_PATH
+#else
+# define MCUBOOT_TERTIARY_SLOT_PATH CONFIG_MCUBOOT_TERTIARY_SLOT_PATH
+#endif
+
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_SCRATCH_PATH
+# define MCUBOOT_SCRATCH_PATH CONFIG_PROJECT_LIBS_MCUBOOT_SCRATCH_PATH
+#else
+# define MCUBOOT_SCRATCH_PATH CONFIG_MCUBOOT_SCRATCH_PATH
+#endif
+
+#ifdef CONFIG_PROJECT_LIBS_MCUBOOT_DEFAULT_FLASH_ERASE_STATE
+# define MCUBOOT_DEFAULT_FLASH_ERASE_STATE CONFIG_PROJECT_LIBS_MCUBOOT_DEFAULT_FLASH_ERASE_STATE
+#else
+# define MCUBOOT_DEFAULT_FLASH_ERASE_STATE CONFIG_MCUBOOT_DEFAULT_FLASH_ERASE_STATE
+#endif
+
 static struct flash_area g_primary_img0 =
 {
   .fa_id = FLASH_AREA_IMAGE_PRIMARY(0),
   .fa_device_id = 0,
   .fa_off = 0,
   .fa_size = 0,
-  .fa_mtd_path = CONFIG_MCUBOOT_PRIMARY_SLOT_PATH
+  .fa_mtd_path = MCUBOOT_PRIMARY_SLOT_PATH
 };
 
 static struct flash_device_s g_primary_priv =
@@ -95,7 +125,7 @@ static struct flash_device_s g_primary_priv =
               },
   .fd = -1,
   .refs = 0,
-  .erase_state = CONFIG_MCUBOOT_DEFAULT_FLASH_ERASE_STATE
+  .erase_state = MCUBOOT_DEFAULT_FLASH_ERASE_STATE
 };
 
 static struct flash_area g_secondary_img0 =
@@ -104,7 +134,7 @@ static struct flash_area g_secondary_img0 =
   .fa_device_id = 0,
   .fa_off = 0,
   .fa_size = 0,
-  .fa_mtd_path = CONFIG_MCUBOOT_SECONDARY_SLOT_PATH
+  .fa_mtd_path = MCUBOOT_SECONDARY_SLOT_PATH
 };
 
 static struct flash_device_s g_secondary_priv =
@@ -120,7 +150,7 @@ static struct flash_device_s g_secondary_priv =
               },
   .fd = -1,
   .refs = 0,
-  .erase_state = CONFIG_MCUBOOT_DEFAULT_FLASH_ERASE_STATE
+  .erase_state = MCUBOOT_DEFAULT_FLASH_ERASE_STATE
 };
 
 static struct flash_area g_tertiary_img0 =
@@ -129,7 +159,7 @@ static struct flash_area g_tertiary_img0 =
   .fa_device_id = 0,
   .fa_off = 0,
   .fa_size = 0,
-  .fa_mtd_path = CONFIG_MCUBOOT_TERTIARY_SLOT_PATH
+  .fa_mtd_path = MCUBOOT_TERTIARY_SLOT_PATH
 };
 
 static struct flash_device_s g_tertiary_priv =
@@ -145,7 +175,7 @@ static struct flash_device_s g_tertiary_priv =
               },
   .fd = -1,
   .refs = 0,
-  .erase_state = CONFIG_MCUBOOT_DEFAULT_FLASH_ERASE_STATE
+  .erase_state = MCUBOOT_DEFAULT_FLASH_ERASE_STATE
 };
 
 static struct flash_area g_scratch_img0 =
@@ -154,7 +184,7 @@ static struct flash_area g_scratch_img0 =
   .fa_device_id = 0,
   .fa_off = 0,
   .fa_size = 0,
-  .fa_mtd_path = CONFIG_MCUBOOT_SCRATCH_PATH
+  .fa_mtd_path = MCUBOOT_SCRATCH_PATH
 };
 
 static struct flash_device_s g_scratch_priv =
@@ -170,7 +200,7 @@ static struct flash_device_s g_scratch_priv =
               },
   .fd = -1,
   .refs = 0,
-  .erase_state = CONFIG_MCUBOOT_DEFAULT_FLASH_ERASE_STATE
+  .erase_state = MCUBOOT_DEFAULT_FLASH_ERASE_STATE
 };
 
 static struct flash_device_s *g_flash_devices[] =

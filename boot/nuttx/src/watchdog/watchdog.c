@@ -56,10 +56,10 @@ void mcuboot_watchdog_feed(void)
   int fd;
   int ret;
 
-  fd = open(CONFIG_MCUBOOT_WATCHDOG_DEVPATH, O_RDONLY);
+  fd = open(CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_DEVPATH, O_RDONLY);
   if (fd < 0)
     {
-      BOOT_LOG_ERR("Failed to open %s", CONFIG_MCUBOOT_WATCHDOG_DEVPATH);
+      BOOT_LOG_ERR("Failed to open %s", CONFIG_PROJECT_LIBS_MCUBOOT_WATCHDOG_DEVPATH);
 
       return;
     }
@@ -95,14 +95,14 @@ int mcuboot_watchdog_init(void)
   int fd;
   int ret;
 
-  fd = open(CONFIG_MCUBOOT_WATCHDOG_DEVPATH, O_RDONLY);
+  fd = open(MCUBOOT_WATCHDOG_DEVPATH, O_RDONLY);
   if (fd < 0)
     {
-      BOOT_LOG_ERR("Failed to open %s", CONFIG_MCUBOOT_WATCHDOG_DEVPATH);
+      BOOT_LOG_ERR("Failed to open %s", MCUBOOT_WATCHDOG_DEVPATH);
       goto errout;
     }
 
-  ret = ioctl(fd, WDIOC_SETTIMEOUT, (unsigned long)CONFIG_MCUBOOT_WATCHDOG_TIMEOUT);
+  ret = ioctl(fd, WDIOC_SETTIMEOUT, (unsigned long)MCUBOOT_WATCHDOG_TIMEOUT);
   if (ret < 0)
     {
       int errcode = errno;
